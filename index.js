@@ -14,7 +14,7 @@ const Alexa = require('alexa-sdk');
 const request = require('request');
 
 const APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
-const futureDate = new Date(new Date().getFullYear(),0,0,0,0,0,0);
+const futureDate = new Date(new Date().getFullYear()+5,0,0,0,0,0,0);
 const languageStrings = {
     'en-GB': {
         translation: {
@@ -123,6 +123,10 @@ const handlers = {
         const speechOutput = this.t('GET_FACT_MESSAGE') + randomFact;
         this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact);
     },
+    'GetParashaIntent': function() {
+        console.log("GetPArashaIntent has been called");
+        this.emit('GetParasha');
+    },
     'GetParasha': function() {
         console.log("getParasha called");
         request('http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=now&ss=on&mf=on&c=on&geo=city&city=CA-Vancouver&m=50&s=on', { json : true}, (err, res, body) => {
@@ -144,7 +148,7 @@ const handlers = {
                     
                 if (parashaDate>today && parashaDate<selectedDate) {
                     selectedParasha=parasha;
-                selectedDate=parashaDate;    
+                    selectedDate=parashaDate;    
                 }
                     console.log(parashaDate);		
                     
