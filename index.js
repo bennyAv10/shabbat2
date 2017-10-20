@@ -148,7 +148,7 @@ const handlers = {
                 }
                     console.log(parashaDate);		
                     
-                    return item.title;
+                    
                 }
             }
         
