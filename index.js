@@ -14,7 +14,7 @@ const Alexa = require('alexa-sdk');
 const request = require('request');
 
 const APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
-
+const futureDate = new Date(new Date().getFullYear(),0,0,0,0,0,0);
 const languageStrings = {
     'en-GB': {
         translation: {
