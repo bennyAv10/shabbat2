@@ -124,6 +124,7 @@ const handlers = {
         this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact);
     },
     'GetParasha': function() {
+        console.log("getParasha called");
         request('http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=now&ss=on&mf=on&c=on&geo=city&city=CA-Vancouver&m=50&s=on', { json : true}, (err, res, body) => {
             if (err) {return console.log(err); }
             //console.log(body);
@@ -154,7 +155,9 @@ const handlers = {
             console.log("Selected Parasha:", selectedParasha, "SelectedDate:", selectedDate);
         
             this.emit(':tell', selectedParasha);
-        })
+        });
+
+        console.log("getParasha finished");
         
     },
     'AMAZON.HelpIntent': function () {
