@@ -129,7 +129,7 @@ const handlers = {
     'GetParasha': function() {
         console.log("getParasha called");
        
-        logic.getParasha();
+        logic.getParasha(this.emit);
 
         console.log("getParasha finished");
         

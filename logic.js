@@ -2,7 +2,7 @@ const request = require('request');
 
 const futureDate = new Date(new Date().getFullYear()+5,0,0,0,0,0,0);
 
-function getParasha() {
+function getParasha(cb) {
     request('http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=now&ss=on&mf=on&c=on&geo=city&city=CA-Vancouver&m=50&s=on', { json : true}, (err, res, body) => {
         if (err) {return console.log(err); }
         //console.log(body);
@@ -32,7 +32,7 @@ function getParasha() {
     
         console.log("Selected Parasha:", selectedParasha, "SelectedDate:", selectedDate);
     
-        this.emit(':tell', selectedParasha);
+        cb(':tell', selectedParasha);
     });
 }
 
