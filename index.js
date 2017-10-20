@@ -111,6 +111,9 @@ const handlers = {
         const speechOutput = this.t('GET_FACT_MESSAGE') + randomFact;
         this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact);
     },
+    'GetNewFakeFactIntent': function () {
+        this.emit('GetFakeFact');
+    },
     'GetFakeFact': function() {
         const factArr = this.t('FAKE_FACTS');
         const factIndex = Math.floor(Math.random() * factArr.length);
