@@ -61,6 +61,10 @@ const languageStrings = {
             HELP_MESSAGE: 'You can say tell me a space fact, or, you can say exit... What can I help you with?',
             HELP_REPROMPT: 'What can I help you with?',
             STOP_MESSAGE: 'Goodbye!',
+            FAKE_FACTS: [
+                'Bibi is Trump brother.',
+                'Meirav Michaeli is a man.',
+            ],
         },
     },
     'de-DE': {
@@ -104,6 +108,14 @@ const handlers = {
         const randomFact = factArr[factIndex];
 
         // Create speech output
+        const speechOutput = this.t('GET_FACT_MESSAGE') + randomFact;
+        this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact);
+    },
+    'GetFakeFact': function() {
+        const factArr = this.t('FAKE_FACTS');
+        const factIndex = Math.floor(Math.random() * factArr.length);
+        const randomFact = factArr[factIndex];
+
         const speechOutput = this.t('GET_FACT_MESSAGE') + randomFact;
         this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact);
     },
