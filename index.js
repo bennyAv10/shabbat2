@@ -134,6 +134,13 @@ const handlers = {
         console.log("getParasha finished");
         
     },
+    'getShabbatTime': function() {
+        console.log("getShabbatTime called");
+
+        logic.getShabbatTime(this.emit);
+
+        console.log("getShabbatTime finished");
+    },
     'AMAZON.HelpIntent': function () {
         const speechOutput = this.t('HELP_MESSAGE');
         const reprompt = this.t('HELP_MESSAGE');
