@@ -134,7 +134,7 @@ const handlers = {
         console.log("getParasha finished");
         
     },
-    'getShabbatTime': function() {
+    'GetShabbatTimeIntent': function() {
         console.log("getShabbatTime called");
 
         logic.getShabbatTime(this.emit);
