@@ -137,7 +137,7 @@ const handlers = {
     },
     'GetShabbatTimeIntent': function() {
         console.log("getShabbatTime called. Intent:", this.event.request.intent.slots); 
-        city='';
+        var city='';
         /*
         citySlot = this.event.request.intent.slots.city;
         if (citySlot.value) {
