@@ -135,7 +135,7 @@ const handlers = {
         
     },
     'GetShabbatTimeIntent': function() {
-        console.log("getShabbatTime called");
+        console.log("getShabbatTime called. Intent:", this.event.request);
 
         logic.getShabbatTime(this.emit);
 
