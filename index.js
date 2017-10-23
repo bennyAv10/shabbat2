@@ -12,6 +12,7 @@
 
 const Alexa = require('alexa-sdk');
 const logic = require('./logic');
+const util = require('util');
 
 const APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
 const languageStrings = {
@@ -135,8 +136,7 @@ const handlers = {
         
     },
     'GetShabbatTimeIntent': function() {
-        console.log("getShabbatTime called. Intent:", this.event.request.intent.slots);
-        
+        console.log("getShabbatTime called. Intent:", this.event.request.intent.slots); 
         city='';
         /*
         citySlot = this.event.request.intent.slots.city;
@@ -165,6 +165,9 @@ const handlers = {
 };
 
 exports.handler = (event, context) => {
+    cosole.log("Event: ", util.inspect(event, false, null));
+    console.log("Context: ", util.inspect(context, false, null));
+    
     const alexa = Alexa.handler(event, context);
     alexa.APP_ID = APP_ID;
     // To enable string internationalization (i18n) features, set a resources object.
