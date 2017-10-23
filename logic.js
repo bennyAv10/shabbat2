@@ -32,7 +32,10 @@ function getParasha(cb) {
     
         console.log("Selected Parasha:", selectedParasha, "SelectedDate:", selectedDate);
     
-        cb(':tell', selectedParasha);
+        var location = body.location.title;
+        var response = "In " + location + "." + selectedParasha;
+
+        cb(':tell', response);
     });
 }
 
@@ -65,11 +68,14 @@ function getCalLuach(title, emitHandler) {
     
         console.log("Category:", title, "Selected:", selectedTitle, "SelectedDate:", selectedDate);
     
-        emitHandler(':tell', selectedTitle);
+        var location = body.location.title;
+        var response = "In " + location + "." + selectedTitle;
+
+        emitHandler(':tell', response);
     });
 }
 
-function getShabbatTime(emitCb) {
+function getShabbatTime(emitCb, city='') {
     getCalLuach('candles', emitCb);
 }
 
