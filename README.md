@@ -52,3 +52,15 @@ suggestions on our forum.
 User Guide: http://docs.aws.amazon.com/codestar/latest/userguide/welcome.html
 
 Forum: https://forums.aws.amazon.com/forum.jspa?forumID=248
+
+How to run unit tests
+----------------------
+
+**To run** all the tests just run the test.js file.
+To run invidual test, send the specific testas argument.
+
+After finished runnint the tests, the results will be printed out. for now if the succeed func has been caleed we consider it as success.
+
+# whats old
+afdasfsagfdsafgdsgfsd
+sadfsdfgdsfg

@@ -40,8 +40,12 @@ function getParasha(cb) {
 }
 
 
-function getCalLuach(title, emitHandler) {
-    request('http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=now&ss=on&mf=on&c=on&geo=city&city=CA-Vancouver&m=50&s=on', { json : true}, (err, res, body) => {
+function getCalLuach(title, emitHandler, city) {
+    urlStr='http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=now&ss=on&mf=on&c=on&geo=city&city=CA-Vancouver&m=50&s=on';
+    if (city) {
+        urlStr=urlStr.replace('city=CA-Vancouver', 'city='+city);
+    }
+    request(urlStr, { json : true}, (err, res, body) => {
         if (err) {return console.log(err); }
         //console.log(body);
         //console.log(body.url);
@@ -76,7 +80,7 @@ function getCalLuach(title, emitHandler) {
 }
 
 function getShabbatTime(emitCb, city='') {
-    getCalLuach('candles', emitCb);
+    getCalLuach('candles', emitCb, city);
 }
 
 function testerCb(cmd, title) {
