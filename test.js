@@ -1,6 +1,7 @@
 const service = require ('./index.js');
 const GetParashaIntentName = 'GetParashaIntent';
 const GetShabbatTimeIntentName = 'GetShabbatTimeIntent'
+const CITY_NAME = 'Seattle Washington';
 var event = {
     "session": {
       "new": false,
@@ -21,7 +22,7 @@ var event = {
         "slots": {
           "city": {
             "name": "city",
-            "value": "Toronto"
+            "value": CITY_NAME
           }
         }
       },
@@ -94,12 +95,30 @@ var event = {
   exports.testGetParasha = testGetParasha;
   exports.testGetShabbatTime = testGetShabbatTime;
 
+  //TODO: add city as argument
+
 if (!module.parent) {
   var testMethods = [testGetParasha, testGetShabbatTime];
   var summary ={};
+  var operationStarted = false;
+
+  // The 3rd argument is the test case
+  if (process.argv.length > 2) {
+    var testName = process.argv[2];
+    if (!testMethods.some(function(val){
+      return val.name == testName;
+    })) {
+      console.log("3rd argument should be one of: ", testMethods);
+      process.exit(-1);
+    } else {
+      testMethods = [eval(testName)];
+    }
+  }
+
   for (test in testMethods) {
+    operationStarted = true;
     testMethods[test]();
   }
-  console.log("hi");
+  console.log("hi", process.argv.length);
   //testGetShabbatTime();
 }
