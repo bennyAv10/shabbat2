@@ -130,7 +130,14 @@ const handlers = {
     'GetParasha': function() {
         console.log("getParasha called");
        
-        logic.getParasha(this.emit);
+        var city='';
+        
+        var citySlot = this.event.request.intent.slots.city;
+        if (citySlot.value) {
+            city = citySlot.value;
+        } 
+
+        logic.getParasha(this.emit, city);
 
         console.log("getParasha finished");
         
