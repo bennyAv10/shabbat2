@@ -1,10 +1,30 @@
 {
-  "name": "alexa-facts",
+  "name": "shabbat2",
   "description": "Example Amazon Alexa skill built with the Amazon Alexa Skills SDK.",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
     "alexa-sdk": "^1.0.6",
     "request": "^2.83.0"
-  }
+  },
+  "devDependencies": {
+    "jest": "^21.2.1"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bennyAv10/shabbat2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bennyAv10/shabbat2/issues"
+  },
+  "homepage": "https://github.com/bennyAv10/shabbat2#readme"
 }

@@ -1,4 +1,4 @@
-const request = require('request');
+const urlGetter = require('./utils/UrlGetter');
 
 const futureDate = new Date(new Date().getFullYear()+5,0,0,0,0,0,0);
 
@@ -13,6 +13,13 @@ function encodeQueryParams(baseUrl, params) {
 
     return [baseUrl, paramsStr.join('&')].join("&");
 }
+
+/**
+ * 
+ * @param {string} title What category in the response we are after
+ * @param {Function} emitHandler emit fucntion to return to Alexa
+ * @param {string} city What is our city of interest
+ */
 function getCalLuach(title, emitHandler, city) {
     return getCalLuachEx(title, emitHandler, city, new Date().getMonth()+1);
 }
@@ -31,36 +38,48 @@ function getCalLuachEx(title, emitHandler, city, month) {
 
     console.log("Calling URL: ", urlStr);
 
-    request(urlStr, { json : true}, 
-        (err, res, body) => calLuachResponseCallback(err, res, body, title, emitHandler, month, city));
+    urlGetter.getFromUrl(urlStr, 
+        (body) => calLuachResponseCallback(body, title, emitHandler, month, city));
 }
 
-function calLuachResponseCallback(err, res, body, title, emitHandler, month, city) {
-    if (err) {return console.log(err); }
-    //console.log(body);
-    //console.log(body.url);
-    //console.log(body.explanasion);
+/**
+ * Get the body from the response togethre with the title, month and city
+ * Find the right answer to emit by:
+ * First, filter the response by city and title
+ * from the filtered results choose the first one which is after today
+ * If there's no results after the above logic, it means
+ * we're in the end of teh month and we should try with the next one
+ * @param {Object} body response body
+ * @param {string} title category of items we're into
+ * @param {Function} emitHandler emit skill reponse to Alexa
+ * @param {number} month - month of the year we're trying to get
+ * @param {string} city - city
+ */
+function calLuachResponseCallback(body, title, emitHandler, month, city) {
+    
     var items = body.items;
     var selectedTitle="";
     var selectedDate=futureDate;
     var today=new Date();
 
-    for (var item of items) {
-        
-        if (item.category == title) {
-            console.log("p:", item.title, "d:", item.date);
-            var parasha=item.title;
-            var parashaDate=new Date(item.date);
-            console.log("pDate: ", parashaDate);
-        if (parashaDate>today && parashaDate<selectedDate) {
-            selectedTitle=parasha;
-            selectedDate=parashaDate;    
-        }
-            console.log(parashaDate);                
+    if (items) {
+        for (var item of items) {
+            
+            if (item.category == title) {
+                console.log("p:", item.title, "d:", item.date);
+                var parasha=item.title;
+                var parashaDate=new Date(item.date);
+                console.log("pDate: ", parashaDate);
+            if (parashaDate>today && parashaDate<selectedDate) {
+                selectedTitle=parasha;
+                selectedDate=parashaDate;    
+            }
+                console.log(parashaDate);                
+            }
         }
     }
 
-    console.log("Category:", title, "Selected:", selectedTitle, "SelectedDate:", selectedDate);
+    console.log("month type: ", typeof month, "Category:", title, "Selected:", selectedTitle, "SelectedDate:", selectedDate);
     
     if (!selectedTitle) {
         if (new Date().getMonth()+1<month) {
@@ -93,7 +112,8 @@ function tester() {
 module.exports = {
     getParasha: getParasha,
     getShabbatTime: getShabbatTime,
-    tester: tester
+    tester: tester,
+    calLuachResponseCallback: calLuachResponseCallback // only here to enable unit test
 };
 
 if (require.main == module) {
