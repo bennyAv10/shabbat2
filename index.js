@@ -155,15 +155,21 @@ const handlers = {
         if (city) {
             logic.getShabbatTime(this.emit, city);
         }else {
-            this.emit('GetLocation', logic.getShabbatTime, city);
+            this.emit('GetLocation', logic.getShabbatTime);
         }
         console.log("getShabbatTime finished");
     },
-    'GetLocation' : function(resumeWith, city) {
-        console.log('getLocation called with ', resumeWith, ' and ', city);
-        city = location.getUserLocation('DEVICE_ID', 'consentToken', 
-        (resCity) => resumeWith(this.emit, resCity));
-        //resumeWith(this.emit, city);
+    'GetLocation' : function(resumeWith) {
+        console.log('getLocation called with ', resumeWith);
+        var permissions = this.event.context.System.user.permissions;;
+        var device = this.event.context.System.device;
+        
+        if (permissions && permissions.consentToken && device.deviceId) {
+            city = location.getUserLocation('DEVICE_ID', 'consentToken', 
+                (resCity) => resumeWith(this.emit, resCity));
+        } else {
+            resumeWith(this.emit, '');
+        }
     },
     'AMAZON.HelpIntent': function () {
         const speechOutput = this.t('HELP_MESSAGE');

@@ -8,11 +8,11 @@ const URL_PATTERN = 'https://api.amazonalexa.com/v1/devices/???/settings/address
  * @param {string} deviceId  As received on the call from Alexa
  * @param {string} consentToke As received on the call from Alexa
  * @param {Function} callback The function to call with the response 
- * 
  */
 function getUserLocation(deviceId, consentToken, callBack) {
     var urlStr = URL_PATTERN.replace('???', deviceId);
 
+    console.log("getUserLocation: url: ", urlStr, " token: ", consentToken);
     var options = {
         url: urlStr,
         headers: {
