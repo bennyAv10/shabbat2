@@ -13,6 +13,7 @@
 const Alexa = require('alexa-sdk');
 const logic = require('./logic');
 const util = require('util');
+const location = require('./location');
 
 const APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
 const languageStrings = {
@@ -151,9 +152,18 @@ const handlers = {
             city = citySlot.value;
         } 
         
-        logic.getShabbatTime(this.emit, city);
-
+        if (city) {
+            logic.getShabbatTime(this.emit, city);
+        }else {
+            this.emit('GetLocation', logic.getShabbatTime, city);
+        }
         console.log("getShabbatTime finished");
+    },
+    'GetLocation' : function(resumeWith, city) {
+        console.log('getLocation called with ', resumeWith, ' and ', city);
+        city = location.getUserLocation('DEVICE_ID', 'consentToken', 
+        (resCity) => resumeWith(this.emit, resCity));
+        //resumeWith(this.emit, city);
     },
     'AMAZON.HelpIntent': function () {
         const speechOutput = this.t('HELP_MESSAGE');

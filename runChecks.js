@@ -1,7 +1,7 @@
 const service = require ('./index.js');
 const GetParashaIntentName = 'GetParashaIntent';
 const GetShabbatTimeIntentName = 'GetShabbatTimeIntent'
-const CITY_NAME = 'Seattle Washington';
+const CITY_NAME = 'Seattle';
 var event = {
     "session": {
       "new": false,
@@ -94,10 +94,43 @@ var event = {
 
   exports.testGetParasha = testGetParasha;
   exports.testGetShabbatTime = testGetShabbatTime;
+/**
+ * even though these tests suppose to be end2end tests,
+ * sometimes it's nos possible to call something out of the lambda
+ * Alexa context. For example, to get the device location, you need the device id and 
+ * the consent token.
+ * 
+ */
+function setupMocks() {
 
-  //TODO: add city as argument
+  // Setup request mock for device location service
+  const location=require('./location');
+  const request = require('request');
+  var x = (uri, options, callback) => {
+      
+    /* we call requests in two methods 
+     * 1. (uri, callback)
+     * 2. (options, callback)
+     * the mock case is in case 2 where we sapply the token as http header
+    */
+    console.log("request mock has been called. uri: ", uri, " options: ", options, " callback: ", callback);
+
+    if (typeof uri == 'object' && uri.headers.Authorization) {
+      console.log('this is a device location call. using mock');
+      options('', 200, {city: 'Tel Aviv'});
+    } else {
+      console.log('this isnt a device location call. using the real function');
+      request(uri, options, callback);
+    }
+  };
+
+  location.setupMockRequest(x);
+}
 
 if (!module.parent) {
+
+  setupMocks();
+
   var testMethods = [testGetParasha, testGetShabbatTime];
   var summary ={};
   var operationStarted = false;
@@ -113,6 +146,10 @@ if (!module.parent) {
     } else {
       testMethods = [eval(testName)];
     }
+  }
+
+  if (process.argv.length > 3) {
+    event.request.intent.slots.city.value = process.argv[3];
   }
 
   for (test in testMethods) {
