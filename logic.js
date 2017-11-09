@@ -30,6 +30,9 @@ function getCalLuachEx(title, emitHandler, city, month) {
         'month': month
     };
 
+    if (!city) {
+
+    }
     var baseUrlStr='http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&nx=on&year=now&ss=on&mf=on&c=on&geo=city&m=50&s=on';
     if (city) {
         params.city = city;
@@ -97,6 +100,7 @@ function calLuachResponseCallback(body, title, emitHandler, month, city) {
 }
 
 function getShabbatTime(emitCb, city='') {
+    console.log('getShabbatTime called with city: ', city);
     getCalLuach('candles', emitCb, city);
 }
 

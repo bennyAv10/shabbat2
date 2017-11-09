@@ -24,7 +24,8 @@ function getUserLocation(deviceId, consentToken, callBack) {
         if (error) {
             console.log("An error occurred: ", error);
         } else {
-            console.log("Response: ", response, " Body: ", body);
+            console.log("Body: ", body);
+            var city = body.city.charAt(0)+body.city.substring(1).toLowerCase();
             callBack(body.city);
         }
     });
