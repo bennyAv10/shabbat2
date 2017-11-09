@@ -29,7 +29,7 @@ function getUserLocation(deviceId, consentToken, callBack) {
             }
             console.log("Body: ", body, " city type: ", typeof body.city, " city: ", body.city);
             var city = body.city.charAt(0)+body.city.substring(1).toLowerCase();
-            callBack(body.city);
+            callBack(city);
         }
     });
 
