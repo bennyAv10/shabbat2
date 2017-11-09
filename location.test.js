@@ -2,7 +2,7 @@ const t = require('./location');
 
 jest.mock('request');
 var requestMock = require('request');
-requestMock.mockImplementation((options, callback) => callback('', '', {city: 'tel aviv'}));
+requestMock.mockImplementation((options, callback) => callback('', '', '{"city": "tel aviv"}'));
 
 
 const URL_PATTERN = 'https://api.amazonalexa.com/v1/devices/???/settings/address';
