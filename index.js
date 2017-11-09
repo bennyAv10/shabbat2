@@ -165,7 +165,7 @@ const handlers = {
         var device = this.event.context.System.device;
         
         if (permissions && permissions.consentToken && device.deviceId) {
-            city = location.getUserLocation('DEVICE_ID', 'consentToken', 
+            city = location.getUserLocation(device.deviceId, permissions.consentToken, 
                 (resCity) => resumeWith(this.emit, resCity));
         } else {
             resumeWith(this.emit, '');
